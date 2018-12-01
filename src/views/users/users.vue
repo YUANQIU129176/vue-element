@@ -14,6 +14,7 @@
         style="width:300px"
       >
         <el-button
+          @click='searchUser'
           slot="append"
           icon="el-icon-search"
         ></el-button>
@@ -217,6 +218,18 @@ export default {
   },
   methods: {
     // 完成搜索用户
+    searchUser () {
+      // 调用发送路由组件的方法
+      GetUserList({
+        query: this.searchValue,
+        pagenum: 1,
+        pagesize: 5
+      }).then((result) => {
+        // 渲染搜索到的数据
+        this.tableData = result.data.users
+        this.total = result.data.total
+      })
+    },
     // 添加新用户
     addUser (formName) {
       // console.log(formName)
