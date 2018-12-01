@@ -32,3 +32,10 @@ export const GetUserList = (pa) => {
       return result.data
     })
 }
+// 添加用户
+export const addBtnUser = (pa) => {
+  return axios.post('users', pa)
+    .then((result) => {
+      return result.data
+    })
+}

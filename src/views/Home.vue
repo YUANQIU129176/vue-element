@@ -6,8 +6,6 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo el-menu-admin"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
@@ -20,7 +18,7 @@
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="/users">
+            <el-menu-item index="user">
               <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span>用户列表</span>
@@ -55,7 +53,9 @@
             <span>你好：admin <a href="javascript:;">退出</a></span>
           </div>
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -67,15 +67,15 @@ export default {
     return {
       collapse: false
     }
-  },
-  methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    }
   }
+  // methods: {
+  //   handleOpen (key, keyPath) {
+  //     console.log(key, keyPath)
+  //   },
+  //   handleClose (key, keyPath) {
+  //     console.log(key, keyPath)
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>
