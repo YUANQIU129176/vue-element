@@ -39,3 +39,42 @@ export const addBtnUser = (pa) => {
       return result.data
     })
 }
+
+// 编辑用户
+export const edituser = (pa) => {
+  return axios.put(`users/${pa.id}`, pa).then(result => {
+    return result.data
+  })
+}
+
+// 删除用户
+export const deluser = (id) => {
+  return axios.delete(`users/${id}`, id).then(result => {
+    return result.data
+  })
+}
+
+// 角色列表、
+export const roleuser = () => {
+  return axios.get('roles').then(result => {
+    return result.data
+  })
+}
+// 授予角色
+export const getRoleUser = (pa) => {
+  return axios.put(`users/${pa.id}/role`, pa).then(result => {
+    return result.data
+  })
+}
+// 查询用户id值
+export const getRoleUserId = (id) => {
+  return axios.get(`users/${id}`, id).then(result => {
+    return result.data
+  })
+}
+// 修改用户状态
+export const userStatus = (uid, type) => {
+  return axios.put(`users/${uid}/state/${type}`).then(result => {
+    return result.data
+  })
+}
