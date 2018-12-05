@@ -113,3 +113,10 @@ export const getRoleMenu = () => {
     return result.data
   })
 }
+
+// 商品列表数据
+export const getGoodsData = (pa) => {
+  return axios.get('goods', {params: pa}).then((result) => {
+    return result.data
+  })
+}

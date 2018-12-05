@@ -10,6 +10,11 @@ import user from '@/views/users/users.vue'
 import role from '@/views/rights/role.vue'
 // 权限列表
 import right from '@/views/rights/right.vue'
+// 商品列
+import goods from '@/views/goods/goods.vue'
+import list from '@/views/goods/List.vue'
+import add from '@/views/goods/Add.vue'
+import categories from '@/views/goods/Categories.vue'
 Vue.use(Router)
 export default new Router({
   routes: [{
@@ -23,22 +28,43 @@ export default new Router({
   },
   {
     name: 'home',
-    path: '/home',
+    path: '/',
     component: home,
     children: [{
       name: 'users',
-      path: '/users',
+      path: 'users',
       component: user
     },
     {
       name: 'role',
-      path: '/roles',
+      path: 'roles',
       component: role
     },
     {
       name: 'right',
-      path: '/rights',
+      path: 'rights',
       component: right
+    },
+    {
+      name: 'goods',
+      path: 'goods',
+      component: goods,
+      redirect: {name: 'list'},
+      children: [{
+        name: 'list',
+        path: 'list',
+        component: list
+      },
+      {
+        name: 'add',
+        path: 'add',
+        component: add
+      }]
+    },
+    {
+      name: 'categories',
+      path: 'categories',
+      component: categories
     }
     ]
   }
