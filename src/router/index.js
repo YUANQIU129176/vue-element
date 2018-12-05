@@ -6,6 +6,10 @@ import login from '../views/login.vue'
 import home from '@/views/Home.vue'
 // 引入 user组件
 import user from '@/views/users/users.vue'
+// 引入右边的组件
+import role from '@/views/rights/role.vue'
+// 权限列表
+import right from '@/views/rights/right.vue'
 Vue.use(Router)
 export default new Router({
   routes: [{
@@ -23,9 +27,20 @@ export default new Router({
     component: home,
     children: [{
       name: 'users',
-      path: '/user',
+      path: '/users',
       component: user
-    }]
+    },
+    {
+      name: 'role',
+      path: '/roles',
+      component: role
+    },
+    {
+      name: 'right',
+      path: '/rights',
+      component: right
+    }
+    ]
   }
   ]
 })

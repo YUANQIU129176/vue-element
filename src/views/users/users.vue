@@ -461,15 +461,16 @@ export default {
       // console.log(row)
       this.roledialogFormVisible = true
       // 角色列表
-      roleuser().then(result => {
-        // console.log(result)
-        // 选项列表的渲染
-        this.options = result.data
-        getRoleUserId(this.roleform.id).then((result) => {
-          this.roleform.rid = result.data.rid
-          this.init()
-          // this.roledialogFormVisible = false
-        })
+      roleuser().then(res => {
+        if (res.meta.status === 200) {
+          this.options = res.data
+          getRoleUserId(row.id).then((result) => {
+            // console.log('选项列表的渲染', result.data.rid)
+            this.roleform.rid = result.data.rid
+            this.init()
+            // this.roledialogFormVisible = false
+          })
+        }
       })
     },
     // 角色授予

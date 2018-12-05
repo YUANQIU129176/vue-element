@@ -78,3 +78,38 @@ export const userStatus = (uid, type) => {
     return result.data
   })
 }
+
+// 获取所有权限的请求方式
+export const getRoleTtree = (tree) => {
+  return axios.get(`rights/${tree}`).then((result) => {
+    return result.data
+  })
+}
+
+// 修改权限角色授权 （提交按钮的）
+export const roleSubmit = (roleId, Ids) => {
+  return axios.post(`roles/${roleId}/rights`, {rids: Ids}).then((result) => {
+    return result.data
+  })
+}
+
+// 删某些权限
+export const delrole = (roleId, rightId) => {
+  return axios.delete(`roles/${roleId}/rights/${rightId}`, roleId, rightId).then((result) => {
+    return result.data
+  })
+}
+
+// 权限列表list
+export const getRoleList = (list) => {
+  return axios.get(`rights/${list}`).then((result) => {
+    return result.data
+  })
+}
+
+// 左边菜单的数据的动态渲染
+export const getRoleMenu = () => {
+  return axios.get('menus').then((result) => {
+    return result.data
+  })
+}

@@ -13,33 +13,15 @@
           :router='true'
           :collapse='collapse'
         >
-          <el-submenu index="1">
+          <el-submenu :index="item.id+''" v-for="item in menuList" :key='item.id'>
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item.authName}}</span>
             </template>
-            <el-menu-item index="user">
+            <el-menu-item :index="subitem.path" v-for="subitem in item.children" :key='subitem.id'>
               <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span>用户列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="2-1">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>角色列表</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item index="2-2">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>权限列表</span>
+                <span>{{subitem.authName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -62,11 +44,18 @@
 </template>
 
 <script>
+import {getRoleMenu} from '@/api/index.js'
 export default {
   data () {
     return {
-      collapse: false
+      collapse: false,
+      menuList: []
     }
+  },
+  mounted () {
+    getRoleMenu().then((res) => {
+      this.menuList = res.data
+    })
   }
   // methods: {
   //   handleOpen (key, keyPath) {
