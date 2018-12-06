@@ -120,3 +120,9 @@ export const getGoodsData = (pa) => {
     return result.data
   })
 }
+// 分类商品列表
+export const getGoodsList = (type) => {
+  return axios.get('categories', {params: type}).then((result) => {
+    return result.data
+  })
+}
