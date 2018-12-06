@@ -23,21 +23,27 @@
         <el-form
           :label-position="labelPosition"
           label-width="80px"
-          :model="formLabelAlign"
+          :model="addForm"
         >
           <el-form-item label="商品名称">
-            <el-input v-model="formLabelAlign.name"></el-input>
+            <el-input v-model="addForm.goods_name"></el-input>
           </el-form-item>
           <el-form-item label="商品价格">
             <el-input
               type='number'
-              v-model="formLabelAlign.region"
+              v-model="addForm.goods_price"
             ></el-input>
           </el-form-item>
           <el-form-item label="商品数量">
             <el-input
               type='number'
-              v-model="formLabelAlign.type"
+              v-model="addForm.goods_number"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="商品重量">
+            <el-input
+              type='number'
+              v-model="addForm.goods_weight"
             ></el-input>
           </el-form-item>
           <el-form-item label="商品分类">
@@ -91,28 +97,49 @@
       <el-tab-pane
         label="商品内容"
         name='4'
-      >商品内容</el-tab-pane>
+      >
+        <!-- 富文本编辑器 -->
+        <template>
+          <quill-editor
+            v-model="content"
+            ref="myQuillEditor"
+            :options="editorOption"
+            @blur="onEditorBlur($event)"
+            @focus="onEditorFocus($event)"
+            @change="onEditorChange($event)"
+          >
+          </quill-editor>
+        </template>
+        <!-- 富文本编辑器 -->
+      </el-tab-pane>
     </el-tabs>
     <el-button
       type="success"
       style="float:right"
+      @click="addGoods"
     >确认添加</el-button>
 
     <!-- 图片预览弹框 -->
     <el-dialog
       title="图片查看"
+      width='80%'
       :visible.sync="imgdialogTableVisible"
-      style="width:100%"
     >
+    <div id="imgs">
     <img :src="imgPath" alt="">
+    </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { getGoodsList } from '@/api/index.js'
+import { getGoodsList, addGoods } from '@/api/index.js'
 export default {
   data () {
     return {
+      // 富文本编辑器
+      content: null,
+      // 内容
+      editorOption: {},
       // 图片路径
       imgPath: '',
       // 顶头步骤
@@ -152,15 +179,35 @@ export default {
     }
   },
   methods: {
+    // 添加商品
+    addGoods () {
+      addGoods(this.addForm).then(res => {
+        console.log(res)
+        // 跳转到商品列表页面
+        this.$router.push({name: 'list'})
+      })
+    },
+    // 富文本编辑器
+    onEditorBlur (val) { // 失去焦点事件
+      // console.log(val)
+      this.goods_introduce = val.editor.delta.ops[0].insert
+      console.log(this.goods_introduce)
+    },
+    onEditorFocus () { // 获得焦点事件
+    },
+    onEditorChange () { // 内容改变事件
+    },
     // s设置请求头
     getToken () {
       var token = localStorage.getItem('loginValue')
       // 返回一个请求头的 信息
       return { Authorization: token }
     },
-    // 分类
+    // 分类 选择时被触发
     handleChange (value) {
       console.log(value)
+      // 赋值goods_cat
+      this.addForm.goods_cat = value.join(',')
     },
     // 图片上传之删除
     handleRemove (file, fileList) {
@@ -198,7 +245,7 @@ export default {
       // console.log(file)
       // console.log(fileList)
       // 拼接处pic的临时路径
-      this.addForm.pics.push({'pic': '/' + response.data.tmp_path})
+      this.addForm.pics.push({ pic: '/' + response.data.tmp_path })
       // console.log(this.addForm.pics)
     },
     // 上传之前触发事件
@@ -225,4 +272,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.dialog {
+  width: 100% img {
+    width: 50%;
+  }
+}
+.quill-editor{
+  height: 300px;
+  border-bottom: 1px solid #ccc;
+  // padding-bottom: 10px
+}
+.el-button{
+  margin:10px 0
+}
 </style>

@@ -122,7 +122,21 @@ export const getGoodsData = (pa) => {
 }
 // 分类商品列表
 export const getGoodsList = (type) => {
-  return axios.get('categories', {params: type}).then((result) => {
+  return axios.get('categories', {params: {type: type}}).then((result) => {
+    return result.data
+  })
+}
+
+// 添加商品
+export const addGoods = (pa) => {
+  return axios.post('goods', pa).then((result) => {
+    return result.data
+  })
+}
+
+// 添加分类
+export const addCategories = (pa) => {
+  return axios.post('categories', pa).then((result) => {
     return result.data
   })
 }
